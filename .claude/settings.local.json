@@ -7,7 +7,9 @@
       "Bash(PYTHONHTTPSVERIFY=0 venv/Scripts/python -m pip:*)",
       "Bash(venv/Scripts/python:*)",
       "Bash(curl:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
