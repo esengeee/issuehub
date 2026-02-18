@@ -1,0 +1,34 @@
+services:
+  # Backend API Service
+  - type: web
+    name: issuehub-api
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: "cd backend && pip install -r requirements.txt"
+    startCommand: "cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: issuehub-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+        sync: false
+      - key: ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "30"
+      - key: CORS_ORIGINS
+        sync: false  # Set manually in Render dashboard after Vercel deployment
+      - key: PYTHON_VERSION
+        value: "3.13"
+
+databases:
+  # PostgreSQL Database
+  - name: issuehub-db
+    databaseName: issuehub
+    user: issuehub
+    plan: free
+    region: oregon

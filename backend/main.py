@@ -4,10 +4,14 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from sqlalchemy.exc import SQLAlchemyError
 from app.core.database import Base, engine
+from app.core.config import get_settings
 from app.api import auth, projects, issues, comments
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
+
+# Get settings
+settings = get_settings()
 
 # Create FastAPI app
 app = FastAPI(
@@ -19,7 +23,7 @@ app = FastAPI(
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001", "http://localhost:5173"],  # Frontend URLs
+    allow_origins=settings.get_cors_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
