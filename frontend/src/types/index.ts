@@ -9,6 +9,7 @@ export interface Project {
   name: string
   key: string
   description: string | null
+  start_date: string | null
   created_at: string
 }
 

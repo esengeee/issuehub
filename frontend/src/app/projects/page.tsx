@@ -14,6 +14,7 @@ export default function ProjectsPage() {
   const [name, setName] = useState('')
   const [key, setKey] = useState('')
   const [description, setDescription] = useState('')
+  const [startDate, setStartDate] = useState('')
   const [error, setError] = useState('')
   const { user } = useAuth()
   const router = useRouter()
@@ -43,11 +44,17 @@ export default function ProjectsPage() {
     setError('')
 
     try {
-      await projectsAPI.create({ name, key, description })
+      await projectsAPI.create({
+        name,
+        key,
+        description,
+        start_date: startDate || undefined
+      })
       setShowCreateModal(false)
       setName('')
       setKey('')
       setDescription('')
+      setStartDate('')
       loadProjects()
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Failed to create project')
@@ -97,6 +104,11 @@ export default function ProjectsPage() {
                 {project.description && (
                   <p style={{ marginTop: '10px', fontSize: '14px' }}>
                     {project.description}
+                  </p>
+                )}
+                {project.start_date && (
+                  <p style={{ marginTop: '10px', fontSize: '12px', color: '#888' }}>
+                    <strong>Started:</strong> {new Date(project.start_date).toLocaleDateString()}
                   </p>
                 )}
               </div>
@@ -161,6 +173,16 @@ export default function ProjectsPage() {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     rows={3}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="startDate">Start Date (optional)</label>
+                  <input
+                    id="startDate"
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
                   />
                 </div>
 

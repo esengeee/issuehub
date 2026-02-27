@@ -41,7 +41,7 @@ export const authAPI = {
 export const projectsAPI = {
   list: () => api.get<Project[]>('/projects'),
   get: (id: number) => api.get<Project>(`/projects/${id}`),
-  create: (data: { name: string; key: string; description?: string }) =>
+  create: (data: { name: string; key: string; description?: string; start_date?: string }) =>
     api.post<Project>('/projects', data),
   addMember: (projectId: number, data: { email: string; role: string }) =>
     api.post(`/projects/${projectId}/members`, data),

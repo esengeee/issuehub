@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum
+from sqlalchemy import Column, Integer, String, DateTime, Date, ForeignKey, Enum
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 import enum
@@ -17,6 +17,7 @@ class Project(Base):
     name = Column(String, nullable=False)
     key = Column(String, unique=True, index=True, nullable=False)
     description = Column(String)
+    start_date = Column(Date, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     # Relationships

@@ -31,7 +31,8 @@ def create_project(
     new_project = Project(
         name=request.name,
         key=request.key,
-        description=request.description
+        description=request.description,
+        start_date=request.start_date
     )
     db.add(new_project)
     db.flush()
